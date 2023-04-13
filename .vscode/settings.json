@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.env.linux": {
+        "DISPLAY": "$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0"
+    }
+}
