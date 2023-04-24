@@ -6,9 +6,6 @@ import java.awt.event.*;
 
 // This class represents a checkers game. It contains a 2D array of characters to represent the board.
 public class GUI extends JFrame {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JButton[][] boardButtons;
     private JLabel messageLabel;
