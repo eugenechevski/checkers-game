@@ -1,4 +1,4 @@
-package main;
+package game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +6,11 @@ import java.awt.event.*;
 
 // This class represents a checkers game. It contains a 2D array of characters to represent the board.
 public class GUI extends JFrame {
-    private JButton[][] boardButtons;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JButton[][] boardButtons;
     private JLabel messageLabel;
     private Board board;
     private Player[] players;
@@ -69,6 +73,8 @@ public class GUI extends JFrame {
         button.setBackground(cell.getColor());
         if (cell.isSelected()) {
             button.setBorder(BorderFactory.createLineBorder(cell.getSelectedColor(), 3));
+        } else if (cell.hasPlayer() && cell.getPlayer().isKing()) {
+            button.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 3));
         } else {
             button.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
         }
@@ -143,7 +149,7 @@ public class GUI extends JFrame {
 
                 messageLabel.setText("Select the square to move to.");
                 return;
-            } else if (board.getSelectedCell() != null && board.isLegalMove(row, col, currentPlayer)) {
+            } else if (board.getSelectedCell() != null && board.isLegalMove(row, col)) {
                 movedLegally();
             } else {
                 messageLabel.setText("Invalid move! Choose a different cell.");

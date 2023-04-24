@@ -1,4 +1,4 @@
-package main;
+package game;
 
 import java.awt.Color;
 
@@ -27,6 +27,7 @@ public class Cell {
         this.player = player;
 
         setColor(player == null ? Color.LIGHT_GRAY : player.getColor());
+        setSelectedColor(player == null ? Color.LIGHT_GRAY : player.getOppositeColor());
     }
 
     public boolean hasPlayer() {
@@ -43,6 +44,10 @@ public class Cell {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public void setSelectedColor(Color color) {
+        this.selectedColor = color;
     }
 
     public boolean isSelected() {

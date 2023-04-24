@@ -1,4 +1,4 @@
-package main;
+package game;
 
 import java.awt.Color;
 
@@ -59,9 +59,15 @@ public class Board {
         return board[row][col];
     }
 
-    public boolean isLegalMove(int toRow, int toCol, Player player) {
+    public boolean isLegalMove(int toRow, int toCol) {
         Cell from = board[fromRow][fromCol];
         Cell to = board[toRow][toCol];
+
+        Player player = from.getPlayer();
+
+        if (player == null) {
+            return false;
+        }
 
         // Check that the piece being moved belongs to the current player
         if (from.hasPlayer() && from.getPlayer().getName() != player.getName()) {
@@ -91,15 +97,9 @@ public class Board {
             return false;
         }
 
-        // Check that the move is legal for kings
-        if (player.isKing()) {
-            if (Math.abs(fromRow - toRow) != 1 || Math.abs(fromCol - toCol) != 1) {
-                return false;
-            }
-        }
-
         // Check that the piece is moving forward if it's not a king
-        if (player.getName() == "White" && fromRow <= toRow || player.getName() == "Black" && fromRow >= toRow) {
+        if (!player.isKing() && (player.getName() == "White" && fromRow <= toRow
+                || player.getName() == "Black" && fromRow >= toRow)) {
             return false;
         }
 
@@ -112,9 +112,10 @@ public class Board {
         // Get the cells
         Cell from = board[fromRow][fromCol];
         Cell to = board[toRow][toCol];
+        Player player = from.getPlayer();
 
         // Move the piece
-        to.setPlayer(from.getPlayer());
+        to.setPlayer(player);
         from.setPlayer(null);
         from.deselect();
 
@@ -129,9 +130,9 @@ public class Board {
 
         // If the piece reaches the last row of the opponent's side, promote it to a
         // king
-        if (toRow == 0 && to.getPlayer().getName() == "Black" ||
-                toRow == 7 && to.getPlayer().getName() == "White") {
-            to.getPlayer().setKing();
+        if (toRow == 0 && player.getName() == "White" ||
+                toRow == 7 && player.getName() == "Black") {
+            player.setKing();
         }
 
         return captured;
