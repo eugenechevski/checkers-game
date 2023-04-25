@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import report.Reporter;
+import login.User;
+
 // This class represents a checkers game. It contains a 2D array of characters to represent the board.
 public class GUI extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -13,18 +16,21 @@ public class GUI extends JFrame {
     private Player[] players;
     private Player currentPlayer;
     private Boolean isPlaying;
+    private Reporter reporter;
+    private User user;
 
-    public GUI() {
+    public GUI(User user) {
+        this.user = user;
         isPlaying = true;
         boardButtons = new JButton[8][8];
         board = new Board();
         players = new Player[]{new Player("White", Color.WHITE), new Player("Black", Color.BLACK)};    
         currentPlayer = players[0];
-
+        
         // This code will close the window when the exit button is pressed
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Checkers Game");
-
+        
         // Create the board buttons and add them to the GUI
         JPanel boardPanel = new JPanel(new GridLayout(8, 8));
         for (int row = 0; row < 8; row++) {
@@ -37,11 +43,14 @@ public class GUI extends JFrame {
             }
         }
         add(boardPanel, BorderLayout.CENTER);
-
+        
         // Create the message label and add it to the GUI
         messageLabel = new JLabel("Player " + currentPlayer.getName() + "'s turn");
         messageLabel.setHorizontalAlignment(JLabel.CENTER);
         add(messageLabel, BorderLayout.SOUTH);
+
+        // Create the reporter
+        reporter = new Reporter(messageLabel);
 
         pack();
         setLocationRelativeTo(null);
@@ -112,7 +121,8 @@ public class GUI extends JFrame {
             // stop the game
             if (board.isGameOver()) { // If the game is over, display a message
                 isPlaying = false;
-                messageLabel.setText("Game over! Player " + currentPlayer.getName() + " wins!");
+                reporter.report("Game over! Player " + currentPlayer.getName() + " wins!");
+                reporter.reportScore(user.getUsername());
                 return;
             } 
             
@@ -127,9 +137,9 @@ public class GUI extends JFrame {
                 updateButton(row, col);
                 switchPlayers();
 
-                messageLabel.setText("Player " + currentPlayer.getName() + "'s turn");
+                reporter.report("Player " + currentPlayer.getName() + "'s turn");
             } else { // If the player captured and can capture again, do not change the player
-                messageLabel.setText("Player " + currentPlayer.getName() + " captured! Select the piece to move again.");
+                reporter.report("Player " + currentPlayer.getName() + " captured! Select the piece to move again.");
             }
         }
 
@@ -144,17 +154,13 @@ public class GUI extends JFrame {
             if (clickedCell.hasPlayer() && clickedCell.getPlayer().getName() == currentPlayer.getName()) {
                 updateSelection(row, col);
 
-                messageLabel.setText("Select the square to move to.");
+                reporter.report("Select the square to move to.");
                 return;
             } else if (board.getSelectedCell() != null && board.isLegalMove(row, col)) {
                 movedLegally();
             } else {
-                messageLabel.setText("Invalid move! Choose a different cell.");
+                reporter.report("Invalid move! Choose a different cell.");
             } 
         }
-    }
-
-    public static void main(String[] args) {
-        new GUI();
     }
 }

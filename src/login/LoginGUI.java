@@ -6,6 +6,7 @@ import java.awt.event.*;
 
 import game.GUI;
 import login.Login;
+import login.User;
 
 public class LoginGUI extends JFrame {
     // Declare instance variables
@@ -44,7 +45,7 @@ public class LoginGUI extends JFrame {
                     // If the login is successful, close the login window and show the game window
                     JOptionPane.showMessageDialog(LoginGUI.this, "Login successful!");
                     dispose();
-                    new GUI();
+                    new GUI(new User(username, password));
                 } else {
                     JOptionPane.showMessageDialog(LoginGUI.this, "Login failed. Please try again.");
                 }

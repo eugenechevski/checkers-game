@@ -160,7 +160,8 @@ public class Board {
                     captureRow >= 0 && captureRow < 8 && captureCol >= 0 && captureCol < 8) {
                 // Check if the piece at the move location is an opponent's piece and the
                 // capture location is empty
-                if (board[newRow][newCol].hasPlayer() && board[newRow][newCol].getPlayer() != player &&
+                if (board[newRow][newCol].hasPlayer() && board[newRow][newCol].getPlayer().getName() != player.getName()
+                        &&
                         !board[captureRow][captureCol].hasPlayer()) {
                     return true;
                 }
