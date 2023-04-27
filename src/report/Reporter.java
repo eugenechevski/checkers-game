@@ -62,6 +62,7 @@ public class Reporter {
                 String line = bufferedReader.readLine();
                 if (line != null) {
                     String[] tokens = line.split(" ");
+                    highestScorePlayer = tokens[0];
                     highestScore = Integer.parseInt(tokens[1]);
                 }
             } catch (FileNotFoundException e) {

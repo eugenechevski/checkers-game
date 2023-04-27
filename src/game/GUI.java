@@ -52,6 +52,9 @@ public class GUI extends JFrame {
         // Create the reporter
         reporter = new Reporter(messageLabel);
 
+        Toolbar toolbar = new Toolbar(reporter, this);
+        add(toolbar, BorderLayout.NORTH);
+
         pack();
         setLocationRelativeTo(null);
         setVisible(true);

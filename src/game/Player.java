@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Color;
 
+// This class is used to store the player's instance
 public class Player {
     private String name;
     private Color color;

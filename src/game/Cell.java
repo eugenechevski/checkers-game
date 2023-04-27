@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Color;
 
+// The class represents a cell on the board
 public class Cell {
     private Color color;
     private Color selectedColor;

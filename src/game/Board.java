@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Color;
 
+// This class is used to store the board's instance
 public class Board {
     private Cell[][] board;
     private int fromRow, fromCol;

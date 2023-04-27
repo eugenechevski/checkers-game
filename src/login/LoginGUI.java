@@ -5,9 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 import game.GUI;
-import login.Login;
-import login.User;
 
+// This class is used to create the login window
 public class LoginGUI extends JFrame {
     // Declare instance variables
     private JLabel usernameLabel;

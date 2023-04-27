@@ -1,5 +1,6 @@
 package login;
 
+// This class is used to store the user's username and password
 public class User {
     private String username;
     private String password;
